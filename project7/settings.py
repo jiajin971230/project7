@@ -37,13 +37,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'system.apps.SystemConfig'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',  #取消csrf保护
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -80,10 +81,10 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'ENGINE': 'django.db.backends.mysql',       #数据库连接方式
-        'NAME': 'db.crm',                           #数据库名
+        'NAME': 'db_crm',                           #数据库名
         'USER':'root',                              #数据库连接用户名
         'PASSWORD':'19971230zjj',                   #数据库密码
-        'HOST':'172.0.0.1',                         #数据库连接ip
+        'HOST':'localhost',                         #数据库连接ip
         'PORT':'3306',                              #端口
         'ATOMIC_REQUESTS':True                      #全局生效自动提交事务
     }
@@ -137,38 +138,38 @@ STATICFILES_DIRS=[
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#打印日志
-LOGGING = {
- 'version': 1,
- 'disable_existing_loggers': False,
- 'formatters': {
-  'verbose': {
-   'format': '[%(asctime)s] [%(levelname)s] %(message)s'
-  },
- },
- 'handlers': {
-  'console':{
-   'level':'INFO',
-   'class':'logging.StreamHandler',
-   'formatter': 'verbose'
-  },
-  'file': {
-   'level': 'INFO',
-   'class': 'logging.FileHandler',
-   'filename': 'D:/monitor.log',
-   'formatter': 'verbose'
-  },
-  'email': {
-   'level': 'ERROR',
-   'class': 'django.utils.log.AdminEmailHandler',
-   'include_html' : True,
-  }
- },
- 'loggers': {
-  'django': {
-   'handlers': ['console', 'file', 'email'],
-   'level': 'INFO',
-   'propagate': True,
-  },
- },
-}
+# #打印日志
+# LOGGING = {
+#  'version': 1,
+#  'disable_existing_loggers': False,
+#  'formatters': {
+#   'verbose': {
+#    'format': '[%(asctime)s] [%(levelname)s] %(message)s'
+#   },
+#  },
+#  'handlers': {
+#   'console':{
+#    'level':'DEBUG',
+#    'class':'logging.StreamHandler',
+#    'formatter': 'verbose'
+#   },
+#   'file': {
+#    'level': 'INFO',
+#    'class': 'logging.FileHandler',
+#    'filename': 'D:/monitor.log',
+#    'formatter': 'verbose'
+#   },
+#   'email': {
+#    'level': 'ERROR',
+#    'class': 'django.utils.log.AdminEmailHandler',
+#    'include_html' : True,
+#   }
+#  },
+#  'loggers': {
+#   'django': {
+#    'handlers': ['console', 'file', 'email'],
+#    'level': 'DEBUG',
+#    'propagate': False,
+#   },
+#  },
+# }
