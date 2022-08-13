@@ -10,15 +10,8 @@ import smtplib  #发送邮件
 from datetime import datetime,timedelta
 import uuid
 from system.models import User
+from hashlib import md5
+import base64
 
-
-td = timedelta(minutes=10)
-ts = datetime.now() + td
-ts=int(round((ts + td).timestamp()*1000))
-print(ts)
-
-# today = datetime.now()  # 获取今天时间
-# print("当前日期是：{}".format(today))
-# end_time = int(round(today.timestamp()*1000))  # 取今天时间为查询结束时间，并转为13位时间戳（int()表示保留整数部分）
-# offset = timedelta(days=-30)  # 定义偏移量，即与当前时间的时间间隔
-# start_time = int(round((today + offset).timestamp()*1000))  # 定义查询开始时间=当前时间回退30天，转为时间戳
+context = base64.b64encode('zengjiajin'.encode(encoding='utf-8')).decode(encoding='utf-8')
+print(context)

@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,redirect
 from django.views.decorators.http import require_POST,require_GET
 from .models import User
 from django.http import JsonResponse
@@ -9,6 +9,8 @@ import smtplib  # 发送邮件
 from datetime import datetime, timedelta
 import uuid
 from hashlib import md5
+import base64
+from django.views.decorators.clickjacking import xframe_options_sameorigin
 #跳转登录页面
 def login(request):
     return render(request, 'system/login.html')
@@ -53,7 +55,9 @@ def unique_email(request):
         })
     except User.DoesNotExist as e:
         # 异常信息说明用户不存在
+        print(e)
         return JsonResponse({'code':200,'msg':'恭喜你，可以注册！'})
+
 
 #邮件发送
         #--------------------------------------准备数据start--------------------------------------
@@ -164,8 +168,83 @@ def login_user(request):
     try:
         username=request.POST.get('username')
         password=request.POST.get('password')
+        remember=request.POST.get('remember')
+        #加密 使用MD5加密
+        password_md5=md5(password.encode(encoding='utf-8')).hexdigest()
 
         # 查询数据库用户名密码是否存在
+        user=User.objects.get(username=username,password=password_md5)
+        # 如果用户存在，存储session信息 关闭浏览器时失效
+        request.session['username_session']=username
+
+        # 设置session失效时间 关闭浏览器session失效
+        request.session.set_expiry(0)
+
+        # 返回成功提示信息
+        context = {
+            'code': 200,
+            'msg': '欢迎回来！'
+        }
+
+        # 如果用户存在 前台JS 存储cookie
+        #存储格式：key--> login_cookie; value--> username&password
+        # 由于功能改造，代码重构
+        if 'true'==remember :
+            context['login_username_cookie'] = base64.b64encode(username.encode(encoding='utf-8')).decode(encoding='utf-8')
+            context['login_password_cookie'] = base64.b64encode(password.encode(encoding='utf-8')).decode(encoding='utf-8')
+        return JsonResponse(context)
 
     except User.DoesNotExist as e:
-        pass
+        # 返回错误提示信息
+        return JsonResponse({'code':400,'msg':'用户名或密码错误！'})
+
+# -------------------------------------------------跳转首页--------------------------------------------------
+def crm_index(request):
+    # 判断session中是否有用户信息
+    username=request.session.get('username_session')
+    if username:
+        return render(request,'system/indexpage.html')
+    #如果不存在，重定向登录页面
+    return redirect('system:register')
+# -------------------------------------------------修改密码--------------------------------------------------
+@require_POST
+@xframe_options_sameorigin
+def update_password(request):
+    try:
+        # -----------------接收参数------------------
+        username=request.POST.get('username')
+        old_password=request.POST.get('old_password')
+        new_password=request.POST.get('new_password')
+        # 使用MD5加密
+        old_password_md5 = md5(old_password.encode(encoding='utf-8')).hexdigest()
+        #查询用户密码是否正确
+        user=User.objects.get(username=username,password=old_password_md5)
+        # -----------------修改密码----------------------
+        # 使用MD5加密
+        new_password_md5 = md5(new_password.encode(encoding='utf-8')).hexdigest()
+        # 修改密码
+        user.password=new_password_md5
+        user.save()
+
+        #修改密码要重新登录，所以要安全退出
+        #安全退出系统要清除session，所以这里不写
+
+        # -----------------返回页面信息----------------------
+        return JsonResponse({
+            'code':200,
+            'msg':"修改成功！"
+        })
+    except User.DoesNotExist as e :
+        return JsonResponse({
+            'code': 400,
+            'msg': "原密码输入错误！"})
+
+# --------------------------------------------安全退出-----------------------------------------------------------------
+
+def logout(request):
+    try:
+        #清除session
+        request.session.flush()
+        return redirect('system:login')
+    except Exception as e:
+        return redirect('system:login')

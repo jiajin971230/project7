@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+{#导入静态资源#}
+{% load static %}
+{#导入base页面#}
+{% include 'base.html' %}
+<link href="{% static 'images/picture.ico'  %}" rel='shortcut icon'>
+<head>
+    <meta charset="UTF-8">
+    <title>客户管理系统</title>
+</head>
+<body class="layout">
+    {#--------------------------------上边菜单------------------------------------------#}
+	<div class="easyui-layout" style="width:100%;height:100%;">
+		<div data-options="region:'north'" style="background-color: #ffffff ; height:100px;">
+            <table style="width: 100%; height: 100%">
+                <tr >
+                    <td>
+                        <img height='80px'  src="{% static 'images/logo.png' %}" alt="logo">
+                    </td>
+                    <td valign="bottom" align="right" >
+                       <strong >欢迎【{{ request.session.username_session }}】登录</strong>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {# --------------------------下边菜单------------------------------------- #}
+		<div data-options="region:'south'"  style="height:30px; text-align: center">
+            版本所有 上海尚学堂<a href="http://www.baidu.com" target="_blank">www.baidu.com</a>(2016-2026)
+        </div>
+        {# --------------------------右边菜单------------------------------------- #}
+		<div data-options="region:'east',split:true" title="East" style="width:100px;"></div>
+        {# --------------------------左边菜单------------------------------------- #}
+		<div data-options="region:'west',split:true" title="导航菜单" style="width:170px;">
+            <div class="easyui-accordion" data-options="fit:true,border:false">
+                <div title="营销管理" data-options="selected:true,iconCls:'icon-yxgl'" style="">
+                    <a href="javascript:openTab('营销管理机会','','icon-yxjhgl')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-yxjhgl'" style="width: 150px">营销机会管理</a>
+                    <a href="javascript:openTab('客户开发计划','','icon-khkfjh')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khkfjh'" style="width: 150px">客户开发计划</a>
+                </div>
+                <!--客户管理-->
+                 <div title="客户管理" data-options="iconCls:'icon-yxgl'" style="">
+                    <a href="javascript:openTab('客户信息管理','','icon-khxxgl')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khxxgl'" style="width: 150px">客户信息管理</a>
+                    <a href="javascript:openTab('客户流失管理','','icon-khlsgl')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khlsgl'" style="width: 150px">客户流失管理</a>
+                </div>
+                <!--服务管理-->
+                <div title="服务管理" data-options="iconCls:'icon-fwgl'" style="">
+                    <a href="javascript:openTab('服务创建','','icon-fwcj')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khxxgl'" style="width: 150px">服务创建</a>
+                    <a href="javascript:openTab('服务分配','','icon-fwfp')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-fwfp'" style="width: 150px">服务分配</a>
+                    <a href="javascript:openTab('服务处理','','icon-fwcl')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-fwcl'" style="width: 150px">服务处理</a>
+                    <a href="javascript:openTab('服务反馈','','icon-fwfk')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-fwfk'" style="width: 150px">服务反馈</a>
+                    <a href="javascript:openTab('服务归档','','icon-fwgd')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-fwgd'" style="width: 150px">服务归档</a>
+                </div>
+                <!--统计报表-->
+                <div title="统计报表" data-options="iconCls:'icon-tjbb'" style="">
+                    <a href="javascript:openTab('客户贡献分析','','icon-khgxfx')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khgxfx'" style="width: 150px">客户贡献分析</a>
+                    <a href="javascript:openTab('客户构成分析','','icon-khgcfx')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khgcfx'" style="width: 150px">客户构成分析</a>
+                    <a href="javascript:openTab('客户服务分析','','icon-khfwfx')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khfwfx'" style="width: 150px">客户服务分析</a>
+                    <a href="javascript:openTab('客户流失分析','','icon-khlsfx')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-khlsfx'" style="width: 150px">客户流失分析</a>
+                </div>
+                <!--基础数据管理-->
+                <div title="基础数据管理" data-options="iconCls:'icon-jcsjgl'" style="">
+                    <a href="javascript:openTab('数据字典管理','','icon-sjzdgl')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-sjzdgl'" style="width: 150px">数据字典管理</a>
+                    <a href="javascript:openTab('产品信息查询','','icon-cpxxcx')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-cpxxcx'" style="width: 150px">产品信息查询</a>
+                </div>
+                <!--系统管理-->
+                <div title="系统管理" data-options="iconCls:'icon-item'" style="">
+                    <a href="javascript:openTab('用户管理','','icon-man')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-man'" style="width: 150px">用户管理</a>
+                    <a href="javascript:openTab('角色管理','','icon-user')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-user'" style="width: 150px">角色管理</a>
+                    <a href="javascript:openTab('模块管理','','icon-user')" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-user'" style="width: 150px">模块管理</a>
+                    <a href="javascript:open_update_password_dialog('{{ request.session.username_session }}');" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-midifyPassword'" style="width: 150px">修改密码</a>
+                    <a href="javascript:logout()" class="easyui-linkbutton"
+                       data-options="plain:true,iconCls:'icon-exit'" style="width: 150px">安全退出</a>
+                </div>
+            </div>
+        </div>
+
+        {#---------------------------------------中间菜单--------------------------------------------------#}
+		<div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
+			<table class="easyui-datagrid"
+					data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
+				<thead>
+					<tr>
+						<th data-options="field:'itemid'" width="80">Item ID</th>
+						<th data-options="field:'productid'" width="100">Product ID</th>
+						<th data-options="field:'listprice',align:'right'" width="80">List Price</th>
+						<th data-options="field:'unitcost',align:'right'" width="80">Unit Cost</th>
+						<th data-options="field:'attr1'" width="150">Attribute</th>
+						<th data-options="field:'status',align:'center'" width="60">Status</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+{#修改密码对话框#}
+<div id="system_index_update_password_dialog" class="easyui-dialog">
+    <form id="system_index_update_password_form" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>用户名：</td>
+                <td><input name="username" id="username" readonly value="{{ request.session.username_session }}" type="text"></td>
+            </tr>
+            <tr>
+                <td>原密码：</td>
+                <td>
+                    <input name="old_password" id="old_pwd" type="password" class="easyui-validatebox"
+                           data-options="required:true,missingMessage:'原密码不能为空',validType:['check_pwd_length','regex_check_pwd']">
+                </td>
+            </tr>
+            <tr>
+                <td>新密码：</td>
+                <td><input name="new_password" id="new_pwd" class="easyui-validatebox"  type="password"
+                           data-options="required:true,missingMessage:'新密码不能为空',validType:['check_pwd_length','regex_check_pwd']">
+                </td>
+            </tr>
+            <tr>
+                <td>确认密码：</td>
+                <td><input class="easyui-validatebox" type="password"
+                           data-options="required:true,missingMessage:'确认密码不能为空',validType:['check_pwd_length','regex_check_pwd','eq_pwd[\'#new_pwd\']']" >
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'js/validatebox_util.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/system/indexpage.js' %}"></script>
+</html>

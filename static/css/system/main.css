@@ -3185,3 +3185,10 @@ html, body {
     height: 7px;
     background: url(../../images/arrow.png);
 }
+
+.forget {
+    color: red;
+    position: absolute;
+    left: 258px;
+    top: 132px;
+}

@@ -1,5 +1,9 @@
 from django.db import models
 from datetime import datetime
+#模型管理器
+class ModelManager(models.Manager):
+    def get_queryset(self):
+        return super(ModelManager,self).get_queryset().filter(is_valid=1)
 #用户模型
 class User(models.Model):
     username=models.CharField(max_length=20,db_column='user_name')
@@ -14,6 +18,7 @@ class User(models.Model):
     status=models.IntegerField(default=0)
     timestamp=models.CharField(max_length=255,null=True)
 
+    objects=ModelManager()
     #元信息
     class Meta(object):
         db_table='t_user'
