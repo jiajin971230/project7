@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+{#导入静态资源#}
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<title>营销机会管理</title>
+    {#导入base页面#}
+    {% include 'base.html' %}
+
+</head>
+
+<body>
+	<table id="dg" title="营销机会管理"
+			data-options="rownumbers:true,fit:true,singleSelect:true,pagination:true,
+			url:'{% url 'sales:select_sale_chance_list' %}',method:'get',pageList:[10,15,20,25,30,35,40,45,50]">
+		<thead>
+			<tr>
+				<th align="center" data-options="field:'customerId',width:80">客户编号</th>
+				<th align="center" data-options="field:'customerName',width:250">客户名称</th>
+				<th align="center" data-options="field:'overview',width:250">概要</th>
+				<th align="center" data-options="field:'creatMan',width:80">创建人</th>
+				<th align="center" data-options="field:'linkMan',width:100">联系人</th>
+				<th align="center" data-options="field:'link_Phone',width:120">联系电话</th>
+                <th align="center" data-options="field:'assignMan',width:80">分配给谁</th>
+                <th align="center" data-options="field:'assignTime',width:180,formatter:formatter_datetime">分配时间</th>
+                <th align="center" data-options="field:'state',width:80">状态</th>
+                <th align="center" data-options="field:'devResult',width:80">开发状态</th>
+
+			</tr>
+		</thead>
+	</table>
+    <script type="text/javascript" src="{% static 'js/sales/sale_chance.js' %}"></script>
+	<script type="text/javascript">
+		$(function(){
+			var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+			pager.pagination({
+				buttons:[{
+					iconCls:'icon-search',
+					handler:function(){
+						alert('search');
+					}
+				},{
+					iconCls:'icon-add',
+					handler:function(){
+						alert('add');
+					}
+				},{
+					iconCls:'icon-edit',
+					handler:function(){
+						alert('edit');
+					}
+				}]
+			});
+		})
+	</script>
+
+</body>
+
+</html>

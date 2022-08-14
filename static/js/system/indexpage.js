@@ -82,3 +82,18 @@ function logout(){
 	    }
     });
 }
+
+// 打开一个新页面
+function openTab(title,urls,iconCls){
+    //选项面板是否存在，存在选中，不存在添加
+    var flag=$('#tabs').tabs('exists',title)
+    if (flag){
+        $('#tabs').tabs('select',title);
+    }else{
+        $('#tabs').tabs('add',{
+        title:title,
+        closable:true,  //是否可以关闭
+        href:urls
+        });
+    }
+}

@@ -34,7 +34,7 @@
 		<div data-options="region:'west',split:true" title="导航菜单" style="width:170px;">
             <div class="easyui-accordion" data-options="fit:true,border:false">
                 <div title="营销管理" data-options="selected:true,iconCls:'icon-yxgl'" style="">
-                    <a href="javascript:openTab('营销管理机会','','icon-yxjhgl')" class="easyui-linkbutton"
+                    <a href="javascript:openTab('营销机会管理','{% url 'sales:sale_chance_index' %}','icon-yxjhgl')" class="easyui-linkbutton"
                        data-options="plain:true,iconCls:'icon-yxjhgl'" style="width: 150px">营销机会管理</a>
                     <a href="javascript:openTab('客户开发计划','','icon-khkfjh')" class="easyui-linkbutton"
                        data-options="plain:true,iconCls:'icon-khkfjh'" style="width: 150px">客户开发计划</a>
@@ -94,20 +94,12 @@
         </div>
 
         {#---------------------------------------中间菜单--------------------------------------------------#}
-		<div data-options="region:'center',title:'Main Title',iconCls:'icon-ok'">
-			<table class="easyui-datagrid"
-					data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
-				<thead>
-					<tr>
-						<th data-options="field:'itemid'" width="80">Item ID</th>
-						<th data-options="field:'productid'" width="100">Product ID</th>
-						<th data-options="field:'listprice',align:'right'" width="80">List Price</th>
-						<th data-options="field:'unitcost',align:'right'" width="80">Unit Cost</th>
-						<th data-options="field:'attr1'" width="150">Attribute</th>
-						<th data-options="field:'status',align:'center'" width="60">Status</th>
-					</tr>
-				</thead>
-			</table>
+		<div region="center" id="center">
+            <div class="easyui-tabs" fit="true" border="false" id="tabs">
+                <div title="首页" data-options="iconCls:'icon-large-smartart'">
+                    <div style="height: 100%;background:url('{% static "images/background.webp" %}') no-repeat;background-size: 100% "></div>
+                </div>
+            </div>
 		</div>
 	</div>
 {#修改密码对话框#}
